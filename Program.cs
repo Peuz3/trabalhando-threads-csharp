@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Threading;
 
-namespace _02_Thread
+namespace _03_ThreadBackground
 {
     class Program
     {
         //Trabalhando com Multithreads
         static void Main(string[] args)
         {
-            for (int i = 0; i < 5; i++)
+            Console.WriteLine("Data inicial: " + DateTime.Now);
+
+            for(int i = 0; i<5; i++)
             {
-                Console.WriteLine("For: " + i);
-                Thread thread = new Thread(ThreadRepeticao);
-                thread.Start();
+                Thread threadFor = new Thread(ThreadRepeticao);
+                //Quando o método main encerra, as threads se encerram tbm
+                threadFor.IsBackground = true;
+                threadFor.Start();
             }
 
-            Console.WriteLine("Fim do Fluxo!");
+            Console.ReadKey();
 
         }
 
@@ -25,6 +28,8 @@ namespace _02_Thread
             {
                 Console.WriteLine("Número: " + i);
             }
+
+            Console.WriteLine("DataTime: " + DateTime.Now);
         }
     }
 }

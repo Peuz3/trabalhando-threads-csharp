@@ -1,29 +1,24 @@
 ﻿using System;
 using System.Threading;
 
-namespace _01_Thread
+namespace _02_Thread
 {
     class Program
     {
+        //Trabalhando com Multithreads
         static void Main(string[] args)
         {
-            //Instaciar a thread
-            Thread thread = new Thread(ThreadRepeticao);
-
-            //Inicar a thread
-            thread.Start();
-
-            //Comprovar que há o processamento em paralelo
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 5; i++)
             {
-                Console.WriteLine("Main: " + i);
+                Console.WriteLine("For: " + i);
+                Thread thread = new Thread(ThreadRepeticao);
+                thread.Start();
             }
 
-            Console.ReadKey();
+            Console.WriteLine("Fim do Fluxo!");
+
         }
 
-        //Ao se utilizar IO - Tela, Rede, Armazenamento 
-        //Existe uma demora no processo
         static void ThreadRepeticao()
         {
             for (int i = 0; i < 1000; i++)

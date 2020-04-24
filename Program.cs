@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Threading;
 
-namespace _03_ThreadBackground
+namespace _04_ThreadSafe
 {
     class Program
     {
-        //Trabalhando com Multithreads
+        static int Rede = 0;
+        static object VariavelDeControle = 0;
+
         static void Main(string[] args)
         {
             Console.WriteLine("Data inicial: " + DateTime.Now);
@@ -24,10 +26,24 @@ namespace _03_ThreadBackground
 
         static void ThreadRepeticao()
         {
+
+
             for (int i = 0; i < 1000; i++)
             {
-                Console.WriteLine("Número: " + i);
+                //Neste bloco as threads irão utlizar os recursos uma por vez
+                //Caso haja muitas threads, este bloco faz com que o programa não fique muito lento
+                //FIFO
+                lock (VariavelDeControle)
+                {
+                    Console.WriteLine("Número: " + i);
+
+                    Rede++;
+                }
+               
             }
+            
+
+            
 
             Console.WriteLine("DataTime: " + DateTime.Now);
         }

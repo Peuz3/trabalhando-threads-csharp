@@ -1,51 +1,31 @@
 ﻿using System;
 using System.Threading;
 
-namespace _04_ThreadSafe
+namespace _05_ThreadId
 {
     class Program
     {
-        static int Rede = 0;
-        static object VariavelDeControle = 0;
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Data inicial: " + DateTime.Now);
-
-            for(int i = 0; i<5; i++)
+            for (int i = 0; i < 5; i++)
             {
-                Thread threadFor = new Thread(ThreadRepeticao);
-                //Quando o método main encerra, as threads se encerram tbm
-                threadFor.IsBackground = true;
-                threadFor.Start();
+                Thread thread = new Thread(ThreadRepeticao);
+                thread.Start(i);
             }
 
-            Console.ReadKey();
-
+            Console.ReadLine();
         }
 
-        static void ThreadRepeticao()
+        //Identificar uma thread
+        static void ThreadRepeticao(object Id)
         {
-
 
             for (int i = 0; i < 1000; i++)
             {
-                //Neste bloco as threads irão utlizar os recursos uma por vez
-                //Caso haja muitas threads, este bloco faz com que o programa não fique muito lento
-                //FIFO
-                lock (VariavelDeControle)
-                {
-                    Console.WriteLine("Número: " + i);
-
-                    Rede++;
-                }
-               
+                Console.WriteLine("Thread: " + Id + " - Número: " + i + " Id Interno da Thread: " + Thread.CurrentThread.ManagedThreadId);
             }
-            
 
-            
-
-            Console.WriteLine("DataTime: " + DateTime.Now);
         }
     }
 }
